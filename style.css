@@ -1,3 +1,16 @@
+/* Add to style.css if desired */
+.set-selector-container {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px var(--shadow-color);
+    display: flex; /* Optional: Align label and select nicely */
+    gap: 10px;
+    align-items: center;
+    justify-content: center; /* Center it */
+}
+
 :root {
     --primary-color: #4CAF50;
     --secondary-color: #2196F3;

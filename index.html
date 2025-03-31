@@ -10,6 +10,17 @@
     <div class="app-container">
         <h1>Flash Card Study App</h1>
 
+        <!-- Add Set Selector Here -->
+        <div class="set-selector-container controls">
+             <label for="setSelector">Select Card Set:</label>
+             <select id="setSelector">
+                 <option value="ca4" selected>Computer Architecture 4 (MIPS)</option>
+                 <option value="ca5">Computer Architecture 5 (Performance)</option>
+             </select>
+        </div>
+        <!-- End Set Selector -->
+
+
         <div id="loadingIndicator" class="loading">Loading cards...</div>
 
         <div id="appContent" style="display: none;"> <!-- Hide content until loaded -->
@@ -19,7 +30,6 @@
                     <select id="cardSelector">
                         <!-- Options populated by JavaScript -->
                     </select>
-                    <!-- "Go" button has been removed -->
                     <button id="randomCardBtn" class="button button-secondary">Random Card</button>
                 </div>
             </div>
