@@ -1,0 +1,255 @@
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #2196F3;
+    --warning-color: #FFC107;
+    --danger-color: #F44336;
+    --light-bg: #f8f9fa;
+    --white: #ffffff;
+    --dark-text: #333;
+    --medium-text: #666;
+    --border-color: #ddd;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --card-height: 350px;
+    --border-radius: 8px;
+    --spacing: 20px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+    margin: 0;
+    padding: var(--spacing);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.app-container {
+    max-width: 800px;
+    width: 100%;
+    padding: var(--spacing);
+}
+
+h1 {
+    text-align: center;
+    color: var(--dark-text);
+    margin-bottom: calc(var(--spacing) * 1.5);
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--medium-text);
+    padding: calc(var(--spacing) * 2);
+}
+
+.controls {
+    display: flex;
+    justify-content: center; /* Center controls */
+    margin-bottom: var(--spacing);
+    flex-wrap: wrap;
+    gap: calc(var(--spacing) / 2);
+}
+
+.nav-controls {
+    display: flex;
+    gap: calc(var(--spacing) / 2);
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.card-container {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    padding: var(--spacing);
+    min-height: var(--card-height);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--spacing);
+    position: relative;
+    overflow: hidden; /* Needed for potential future animations */
+}
+
+.card-number {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--light-bg);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    color: var(--medium-text);
+}
+
+.card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* Stack question and answer */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    text-align: center;
+    padding: calc(var(--spacing) * 1.5) var(--spacing); /* More padding */
+}
+
+
+.question {
+    font-size: 1.5em; /* Slightly larger */
+    margin-bottom: var(--spacing);
+    line-height: 1.4;
+    display: block; /* Ensure it takes space */
+    width: 100%;
+}
+
+.answer {
+    font-size: 1.2em;
+    background-color: #e9f5e9; /* Light green background */
+    padding: var(--spacing);
+    border-radius: var(--border-radius);
+    border: 1px solid #c8e6c9;
+    margin-top: var(--spacing);
+    display: none; /* Hidden initially */
+    width: 100%;
+    box-sizing: border-box; /* Include padding in width */
+    line-height: 1.5;
+    transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.answer.visible {
+    display: block; /* Make it visible for transition */
+    opacity: 1;
+    max-height: 500px; /* Set a large enough max-height for transition */
+}
+
+/* Buttons */
+.button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    font-size: 0.95em;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+.button:active {
+     transform: scale(0.98);
+}
+
+.button-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+.button-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+.button-reveal {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    margin-top: var(--spacing); /* Space above reveal button */
+    align-self: center; /* Center the button */
+}
+
+#revealBtn {
+    display: block; /* Ensure it's block for margin-top */
+}
+
+.feedback-controls {
+    display: none; /* Hidden initially */
+    justify-content: space-around; /* Space out buttons */
+    gap: calc(var(--spacing) / 2);
+    margin-top: var(--spacing);
+    width: 100%;
+    flex-wrap: wrap; /* Allow wrapping */
+}
+
+.feedback-controls.visible {
+     display: flex;
+}
+
+
+.understand { background-color: var(--primary-color); color: white; }
+.little-bit { background-color: var(--warning-color); color: var(--dark-text); } /* Darker text for yellow */
+.no-idea { background-color: var(--danger-color); color: white; }
+
+.feedback-controls .button {
+    flex: 1; /* Allow buttons to grow */
+    min-width: 120px; /* Minimum width */
+    max-width: 200px; /* Max width */
+}
+
+/* Select Dropdown */
+select {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    min-width: 100px; /* Give it some base width */
+}
+
+label[for="cardSelector"] {
+    font-weight: bold;
+    color: var(--medium-text);
+}
+
+.stats {
+    text-align: center;
+    margin-top: var(--spacing);
+    font-size: 0.9em;
+    color: var(--medium-text);
+    background-color: var(--white);
+    padding: calc(var(--spacing) / 2);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 6px var(--shadow-color);
+}
+
+.stats span {
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+/* Responsive adjustments (Example) */
+@media (max-width: 600px) {
+    body {
+        padding: calc(var(--spacing) / 2);
+    }
+    .app-container {
+        padding: calc(var(--spacing) / 2);
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    .controls {
+        flex-direction: column;
+        align-items: stretch; /* Make controls stack */
+    }
+    .nav-controls {
+        justify-content: center;
+    }
+    .question {
+        font-size: 1.3em;
+    }
+    .answer {
+        font-size: 1.1em;
+    }
+    .feedback-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .feedback-controls .button {
+        max-width: none; /* Allow buttons to take full width */
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .stats {
+        font-size: 0.85em;
+    }
+}

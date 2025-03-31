@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Flash Card Study App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <h1>Flash Card Study App</h1>
+
+        <div id="loadingIndicator" class="loading">Loading cards...</div>
+
+        <div id="appContent" style="display: none;"> <!-- Hide content until loaded -->
+            <div class="controls">
+                <div class="nav-controls">
+                    <label for="cardSelector">Go to:</label>
+                    <select id="cardSelector">
+                        <!-- Options populated by JavaScript -->
+                    </select>
+                    <button id="goToCardBtn" class="button button-secondary">Go</button>
+                    <button id="randomCardBtn" class="button button-secondary">Random Card</button>
+                </div>
+            </div>
+
+            <div class="card-container">
+                <span class="card-number" id="cardNumber">Card 0 of 0</span>
+                <div class="card-content">
+                    <div class="question" id="questionText"></div>
+                    <div class="answer" id="answerText"></div>
+                </div>
+                <button id="revealBtn" class="button button-reveal">Reveal Answer</button>
+
+                <div class="feedback-controls" id="feedbackControls">
+                    <button class="button understand" id="understandBtn">I Understand</button>
+                    <button class="button little-bit" id="littleBitBtn">Need Review</button>
+                    <button class="button no-idea" id="noIdeaBtn">No Idea</button>
+                </div>
+            </div>
+
+            <div class="stats" id="statsDisplay">Calculating stats...</div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
