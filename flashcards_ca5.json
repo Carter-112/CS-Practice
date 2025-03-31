@@ -1,0 +1,502 @@
+[
+    {
+        "id": 1,
+        "question": "What is the primary purpose of tracking performance metrics in processor design?",
+        "answer": "The primary purposes are:\n\n*   **Comparison:** To determine which processor performs better for a specific task (e.g., comparing new vs. existing laptop CPUs).\n*   **Evaluation:** To quantify whether design changes (e.g., architectural optimizations) actually improved performance.\n\nMetrics are essential to **validate design effectiveness**."
+    },
+    {
+        "id": 2,
+        "question": "How do performance metrics depend on the processor's intended purpose?",
+        "answer": "Metrics vary based on priorities for different processor types:\n\n*   **Mobile Processors:** Prioritize **power efficiency** (e.g., performance per watt) for longer battery life.\n*   **Desktop Processors:** Focus on **raw performance** (e.g., speed) for tasks like gaming or video editing.\n*   **Server Processors:** Emphasize **throughput** (handling many tasks) and **reliability** for 24/7 operation.\n*   **Graphics Processors (GPUs):** Highlight **parallel processing** capabilities for rendering or AI."
+    },
+    {
+        "id": 3,
+        "question": "Why do performance metrics evolve over time?",
+        "answer": "Metrics evolve as technology and priorities change:\n\n*   **Early Metrics:** Focused on **clock speed** (cycles per second).\n*   **Modern Metrics:** Include **Instructions Per Cycle (IPC)** and **performance per watt**, reflecting efficiency priorities.\n*   **Emerging Technologies:** New metrics arise for specialized processors (e.g., AI accelerators)."
+    },
+    {
+        "id": 4,
+        "question": "What are the two main steps for evaluating processors?",
+        "answer": "The two main steps are:\n\n1.  **Define Performance:** Specify what 'performance' means for the given context (e.g., rendering speed for gaming, battery life for mobile).\n2.  **Choose Metrics:** Select quantifiable metrics that align with the definition (e.g., **Frames Per Second (FPS)** for gaming, **transactions per second** for servers)."
+    },
+    {
+        "id": 5,
+        "question": "Describe the sports car vs. bus analogy for evaluating processors.",
+        "answer": "Compares a **Sports Car** (fast, low capacity, fuel-efficient per mile) vs. a **Bus** (slower, high capacity, less fuel-efficient per mile).\n\n*   **Scenario 1 (1 person, long distance):** Car wins (focus on **speed**, **individual efficiency**).\n*   **Scenario 2 (Many people, short distance):** Bus wins (focus on **capacity**, **total time/trips**).\n\nIllustrates that the 'better' choice and relevant metrics **depend entirely on the task**."
+    },
+    {
+        "id": 6,
+        "question": "In the sports car vs. bus analogy, what metrics matter for 1 person traveling 200 miles?",
+        "answer": "For 1 person traveling 200 miles, the **Sports Car** is better. Key metrics:\n\n*   **Speed/Time:** Lower travel time (e.g., 1.33 hours vs. 2.86 hours).\n*   **Fuel Economy:** Lower fuel consumption (e.g., 8 gallons vs. 20 gallons).\n\nThese align with processor **speed** and **efficiency** for a single task."
+    },
+    {
+        "id": 7,
+        "question": "In the sports car vs. bus analogy, what metrics matter for 30 people traveling 2 miles?",
+        "answer": "For 30 people traveling 2 miles, the **Bus** is better. Key metrics:\n\n*   **Capacity:** Fewer trips needed (e.g., 1 trip vs. 15 trips).\n*   **Total Time:** Lower overall time to transport everyone (e.g., 1.7 min vs. 11.7 min).\n\nThese align with processor **throughput** and **task completion** for multiple users/tasks."
+    },
+    {
+        "id": 8,
+        "question": "How does the sports car vs. bus analogy apply to processor evaluation?",
+        "answer": "*   **Sports Car:** Represents a high-speed, low-capacity processor (e.g., **Gaming CPU**). Best for **single, intensive tasks**.\n*   **Bus:** Represents a high-throughput, potentially slower-per-task processor (e.g., **Server CPU**). Best for **handling many concurrent tasks**.\n\nShows the need to **match metrics and processor type to the workload**."
+    },
+    {
+        "id": 9,
+        "question": "What are some metrics to consider when evaluating processors, as suggested by the car analogy?",
+        "answer": "Metrics analogous to the car scenario:\n\n*   **Execution Time:** (Like travel time)\n*   **Throughput/Capacity:** (Like number of trips/passengers)\n*   **Power Consumption:** (Like fuel fill-ups/rate of use)\n*   **Energy Consumption:** (Like total fuel burned)\n*   **Efficiency per Task:** (Like per-person fuel economy)"
+    },
+    {
+        "id": 10,
+        "question": "How is total execution time used as a metric to compare processors?",
+        "answer": "**Total Execution Time** measures the time taken to run a specific program. If Processor A takes **less time** than Processor B for the same program (e.g., A=10s, B=20s), A is considered faster for that program. It's a direct measure of **speed**."
+    },
+    {
+        "id": 11,
+        "question": "Why can total execution time be a controversial metric?",
+        "answer": "It's controversial because **results depend heavily on the specific program chosen**. A program optimized for Processor A might run poorly on B, making A look better, while a different program might favor B. This **program dependency** can bias the comparison."
+    },
+    {
+        "id": 12,
+        "question": "How do you quantify the difference in execution time between two processors?",
+        "answer": "Use the **Speed-up** formula (assuming lower time is better):\n\n`Speed-up = (Execution Time of Slower Processor) / (Execution Time of Faster Processor)`\n\nExample: If B takes 20s and A takes 10s, Speed-up = 20s / 10s = **2**. This means A is **2 times faster** than B."
+    },
+    {
+        "id": 13,
+        "question": "What does a speed-up value of 1 indicate when comparing execution times?",
+        "answer": "A speed-up value of **1** indicates **equal performance** in terms of execution time. Both processors take the same amount of time to complete the program."
+    },
+    {
+        "id": 14,
+        "question": "What does a speed-up value greater than 1 indicate when comparing execution times?",
+        "answer": "A speed-up **greater than 1** (e.g., Speed-up = 2) indicates the processor in the **denominator** (Processor A in `Time_B / Time_A`) is **faster**. A speed-up of 2 means A is twice as fast as B."
+    },
+    {
+        "id": 15,
+        "question": "What does a speed-up value less than 1 indicate when comparing execution times?",
+        "answer": "A speed-up **less than 1** (e.g., Speed-up = 0.5 in `Time_B / Time_A`) indicates the processor in the **numerator** (Processor B) is **faster**. A speed-up of 0.5 means A is half as fast as B (or B is twice as fast as A)."
+    },
+    {
+        "id": 16,
+        "question": "Why is total execution time useful for certain tasks, and what are its limitations?",
+        "answer": "*   **Usefulness:** Critical for **latency-sensitive tasks** where speed is paramount (e.g., video rendering, scientific simulations).\n*   **Limitations:** Doesn't capture other important factors like **power efficiency** (crucial for mobile) or **throughput/multitasking** (crucial for servers)."
+    },
+    {
+        "id": 17,
+        "question": "What metrics can the speed-up formula be applied to besides execution time?",
+        "answer": "Speed-up can compare various metrics, adjusting the formula based on whether higher or lower is better:\n\n*   **Cycle Counts** (Lower is better)\n*   **CPI** (Lower is better)\n*   **Clock Frequency** (Higher is better)\n*   **Throughput** (Higher is better)\n*   **Energy** (Lower is better)\n*   **Power** (Often lower is better, context matters)"
+    },
+    {
+        "id": 18,
+        "question": "Why is the speed-up metric always unitless?",
+        "answer": "Speed-up is **unitless** because it's a **ratio** of two quantities measured in the **same units**. The units cancel out (e.g., seconds/seconds, Hz/Hz, cycles/cycles), leaving a pure numerical factor."
+    },
+    {
+        "id": 19,
+        "question": "How do you interpret a speed-up value in terms of improvement or slow-down?",
+        "answer": "*   **Speed-up > 1:** Indicates an **improvement** (the reference processor is faster/better).\n*   **Speed-up < 1:** Indicates a **slow-down** (the reference processor is slower/worse).\n*   **Speed-up = 1:** Indicates **no change** or equal performance."
+    },
+    {
+        "id": 20,
+        "question": "How do you adjust the speed-up formula when higher values are better for a metric?",
+        "answer": "When **higher values are better** (e.g., Frequency, Throughput), the formula is:\n\n`Speed-up = (Value of Faster/Better Processor A) / (Value of Slower/Worse Processor B)`\n\nExample: A=3GHz, B=2GHz. Speed-up = 3 / 2 = 1.5 (A is 1.5x better)."
+    },
+    {
+        "id": 21,
+        "question": "How do you adjust the speed-up formula when lower values are better for a metric?",
+        "answer": "When **lower values are better** (e.g., Execution Time, CPI, Energy), the formula is:\n\n`Speed-up = (Value of Slower/Worse Processor B) / (Value of Faster/Better Processor A)`\n\nExample: A=10s, B=20s. Speed-up = 20 / 10 = 2 (A is 2x better)."
+    },
+    {
+        "id": 22,
+        "question": "Calculate the speed-up for cycle counts where A takes 1,000 cycles and B takes 2,000 cycles.",
+        "answer": "Lower cycles are better. Formula: `Speed-up = Cycles_B / Cycles_A`\nSpeed-up = 2000 / 1000 = **2**.\nProcessor A is **2 times better** (faster in terms of cycles) than B."
+    },
+    {
+        "id": 23,
+        "question": "Calculate the speed-up for throughput where A handles 500 tasks/s and B handles 400 tasks/s.",
+        "answer": "Higher throughput is better. Formula: `Speed-up = Throughput_A / Throughput_B`\nSpeed-up = 500 / 400 = **1.25**.\nProcessor A is **1.25 times better** (handles 25% more tasks/sec) than B."
+    },
+    {
+        "id": 24,
+        "question": "How does the speed-up metric help in processor evaluation?",
+        "answer": "Speed-up provides a **standardized, unitless way** to quantify performance differences:\n\n*   Simplifies comparison across different metrics (time, cycles, throughput).\n*   Clearly indicates improvement (>1) or regression (<1).\n*   Easy to communicate (e.g., 'Processor A is 1.5 times faster')."
+    },
+    {
+        "id": 25,
+        "question": "What does Cycles Per Instruction (CPI) measure in processor performance?",
+        "answer": "**Cycles Per Instruction (CPI)** measures processor efficiency: the **average number of clock cycles** needed to execute **one instruction**.\n\nA **lower CPI is better**, indicating higher efficiency (fewer cycles wasted per instruction)."
+    },
+    {
+        "id": 26,
+        "question": "What is the formula for calculating CPI?",
+        "answer": "The formula for CPI is:\n\n`CPI = (Total Clock Cycles for Program) / (Total Dynamic Instructions Executed)`\n\nExample: 1234 cycles / 1000 instructions = CPI of **1.234**."
+    },
+    {
+        "id": 27,
+        "question": "Why can CPI be a non-integer value?",
+        "answer": "CPI is often non-integer because it's an **average**. Different instructions take different numbers of cycles to execute (e.g., ADD might take 1 cycle, MUL might take 3 cycles). The CPI reflects the average across the mix of instructions in a specific program run."
+    },
+    {
+        "id": 28,
+        "question": "What is the CPI for an idealized single-cycle MIPS processor, and why?",
+        "answer": "The CPI for an idealized single-cycle MIPS processor is exactly **1**. This is because, by definition, **every instruction** completes in exactly **one clock cycle** in this simple model."
+    },
+    {
+        "id": 29,
+        "question": "Why is CPI typically greater than 1 in complex processors?",
+        "answer": "In most real processors (pipelined, superscalar), CPI > 1 because:\n\n*   Different instructions have varying latencies (e.g., floating-point vs. integer).\n*   Pipeline stalls occur due to hazards (data, control, structural).\n*   Memory access latency causes waits.\n\nThe average reflects these delays."
+    },
+    {
+        "id": 30,
+        "question": "Calculate the CPI for a program with 500 instructions, where 400 take 1 cycle and 100 take 3 cycles.",
+        "answer": "*   Cycles for 1-cycle instructions: 400 * 1 = 400 cycles\n*   Cycles for 3-cycle instructions: 100 * 3 = 300 cycles\n*   Total Cycles = 400 + 300 = 700 cycles\n*   Total Instructions = 500\n\n`CPI = Total Cycles / Total Instructions = 700 / 500 = **1.4**`"
+    },
+    {
+        "id": 31,
+        "question": "Why are cycle counts and instruction counts always integers, but CPI can be a decimal?",
+        "answer": "*   **Cycle/Instruction Counts:** Represent discrete, countable events. You can't have half a cycle or half an instruction executed.\n*   **CPI:** Is a **ratio** or **average** (Cycles / Instructions). Averages of integers can easily be non-integers (decimals)."
+    },
+    {
+        "id": 32,
+        "question": "Compare the efficiency of two processors: A (2400 cycles, 2000 instructions) and B (3000 cycles, 2000 instructions).",
+        "answer": "*   CPI_A = 2400 / 2000 = **1.2**\n*   CPI_B = 3000 / 2000 = **1.5**\n\nProcessor A is **more efficient** (lower CPI).\nSpeed-up (lower is better) = CPI_B / CPI_A = 1.5 / 1.2 = **1.25**. A is 1.25x more efficient per instruction."
+    },
+    {
+        "id": 33,
+        "question": "What is a limitation of using CPI alone to evaluate processor performance?",
+        "answer": "CPI measures cycles per instruction, but **ignores clock speed (frequency)**. A processor with a lower CPI might still be slower overall if it has a significantly slower clock frequency. \n**Execution Time = Instructions * CPI * Clock Period** - all three factors matter."
+    },
+    {
+        "id": 34,
+        "question": "How can CPI be used to optimize processor design?",
+        "answer": "Designers aim to **reduce CPI** to improve performance.\n\n*   Analyze which instruction types contribute most to cycles.\n*   Optimize the hardware for those common/slow instructions (e.g., faster multipliers, better pipelining).\n*   Reducing CPI directly reduces total cycles, thus reducing execution time (assuming clock frequency is constant)."
+    },
+    {
+        "id": 35,
+        "question": "What are the two equivalent formulas for execution time in processor evaluation?",
+        "answer": "1.  `Execution Time = Number of Cycles * Clock Period`\n2.  `Execution Time = Number of Instructions * CPI * Clock Period`\n\n(Where `Clock Period = 1 / Clock Frequency`)"
+    },
+    {
+        "id": 36,
+        "question": "What factor affecting execution time is primarily influenced by the compiler or programmer?",
+        "answer": "The **Number of Instructions** executed is primarily influenced by the **compiler** (through optimization levels, code generation) and the **programmer** (through algorithm choice, coding style)."
+    },
+    {
+        "id": 37,
+        "question": "What factors affecting execution time are primarily influenced by the processor architect or circuit designer?",
+        "answer": "The **CPI** (influenced by architecture like pipelining, hazard handling) and the **Clock Period/Frequency** (influenced by circuit design, process technology) are primarily determined by the **hardware designers** (architects, circuit designers)."
+    },
+    {
+        "id": 38,
+        "question": "What is the execution time for a single-cycle processor with 10,000 instructions and a 2 GHz clock?",
+        "answer": "*   Instructions = 10,000\n*   CPI = 1 (single-cycle definition)\n*   Frequency = 2 GHz = 2 * 10^9 Hz\n*   Clock Period = 1 / (2 * 10^9) s = 0.5 * 10^-9 s = 0.5 ns\n\n`Execution Time = 10,000 * 1 * (0.5 * 10^-9) s = 5000 * 10^-9 s = **5 microseconds (µs)**`"
+    },
+    {
+        "id": 39,
+        "question": "How does reducing the number of instructions to 8,000 affect execution time for a single-cycle processor at 2 GHz?",
+        "answer": "*   New Instructions = 8,000\n*   CPI = 1\n*   Clock Period = 0.5 ns\n\n`New Execution Time = 8,000 * 1 * 0.5 ns = 4000 ns = **4 µs**`\n\nReducing instructions by 20% (from 10k to 8k) reduces execution time by 20% (from 5 µs to 4 µs)."
+    },
+    {
+        "id": 40,
+        "question": "How does increasing the clock frequency to 4 GHz affect execution time for a single-cycle processor with 10,000 instructions?",
+        "answer": "*   Instructions = 10,000\n*   CPI = 1\n*   New Frequency = 4 GHz = 4 * 10^9 Hz\n*   New Clock Period = 1 / (4 * 10^9) s = 0.25 ns\n\n`New Execution Time = 10,000 * 1 * 0.25 ns = 2500 ns = **2.5 µs**`\n\nDoubling the frequency (from 2GHz to 4GHz) halves the execution time (from 5 µs to 2.5 µs)."
+    },
+    {
+        "id": 41,
+        "question": "Compare the execution times of two single-cycle processors: A (10,000 instructions, 2 GHz) and B (10,000 instructions, 4 GHz).",
+        "answer": "*   Time_A = 10,000 * 1 * (1/2GHz) = 5 µs\n*   Time_B = 10,000 * 1 * (1/4GHz) = 2.5 µs\n\nProcessor B is faster.\nSpeed-up = Time_A / Time_B = 5 µs / 2.5 µs = **2**. B is **2 times faster** than A due to the higher clock frequency."
+    },
+    {
+        "id": 42,
+        "question": "What is the clock frequency of Computer A (Intel x86-64) in the example, and how do you calculate its clock period?",
+        "answer": "*   Clock Frequency (A) = **2.5 GHz** = 2.5 * 10^9 Hz\n*   Clock Period (A) = 1 / Frequency = 1 / (2.5 * 10^9 Hz) = 0.4 * 10^-9 s = **0.4 ns**"
+    },
+    {
+        "id": 43,
+        "question": "What is the clock frequency of Computer B (Apple M1 ARM) in the example, and how do you calculate its clock period?",
+        "answer": "*   Clock Frequency (B) = **3.2 GHz** = 3.2 * 10^9 Hz\n*   Clock Period (B) = 1 / Frequency = 1 / (3.2 * 10^9 Hz) = 0.3125 * 10^-9 s = **0.3125 ns**"
+    },
+    {
+        "id": 44,
+        "question": "Calculate the execution time for Computer A (Intel x86-64) with 1,428,927 instructions, CPI = 1.5, and 2.5 GHz.",
+        "answer": "*   Instructions = 1,428,927\n*   CPI = 1.5\n*   Clock Period = 0.4 ns = 0.4 * 10^-9 s\n\n`Execution Time = 1,428,927 * 1.5 * (0.4 * 10^-9) s`\n`= 857,356.2 * 10^-9 s = **857.36 microseconds (µs)**`"
+    },
+    {
+        "id": 45,
+        "question": "Calculate the execution time for Computer B (Apple M1 ARM) with 1,833,702 instructions, CPI = 1.3, and 3.2 GHz.",
+        "answer": "*   Instructions = 1,833,702\n*   CPI = 1.3\n*   Clock Period = 0.3125 ns = 0.3125 * 10^-9 s\n\n`Execution Time = 1,833,702 * 1.3 * (0.3125 * 10^-9) s`\n`= 744,691.54 * 10^-9 s = **744.69 microseconds (µs)**`"
+    },
+    {
+        "id": 46,
+        "question": "Compare the execution times of Computer A and Computer B from the example, and calculate the speed-up.",
+        "answer": "*   Time_A = 857.36 µs\n*   Time_B = 744.69 µs\n\nComputer B is faster.\nSpeed-up = Time_A / Time_B = 857.36 / 744.69 ≈ **1.151**.\nComputer B is approximately **1.15 times faster** (or 15.1% faster) than Computer A for this workload."
+    },
+    {
+        "id": 47,
+        "question": "Why does Computer B (ARM) potentially execute more instructions than Computer A (x86-64) for the same task in the example?",
+        "answer": "This often occurs because:\n\n*   **ARM (like Computer B)** typically uses a **RISC** (Reduced Instruction Set Computing) architecture with simpler, fixed-length instructions. More instructions may be needed to achieve the same result.\n*   **x86-64 (like Computer A)** uses a **CISC** (Complex Instruction Set Computing) architecture with more complex, variable-length instructions. Fewer instructions might be needed."
+    },
+    {
+        "id": 48,
+        "question": "How does Computer B's lower CPI contribute to its performance advantage in the example?",
+        "answer": "Computer B has **CPI = 1.3** vs. Computer A's **CPI = 1.5**. This lower CPI means B executes instructions more efficiently (fewer cycles per instruction on average). This efficiency helps offset the fact that it might execute more instructions overall, contributing to its faster total execution time."
+    },
+    {
+        "id": 49,
+        "question": "How does Computer B's higher clock frequency contribute to its performance advantage in the example?",
+        "answer": "Computer B has a **higher clock frequency** (3.2 GHz vs. 2.5 GHz). This means its **clock period is shorter** (0.3125 ns vs. 0.4 ns). Each cycle takes less time, so even if CPI were the same, B would complete the required cycles faster, reducing total execution time."
+    },
+    {
+        "id": 50,
+        "question": "What architectural trade-offs (RISC vs. CISC) are reflected in the Computer A vs. B example?",
+        "answer": "The example highlights typical RISC vs. CISC trade-offs:\n\n*   **CISC (A: x86-64):** Aims for **fewer instructions** using more complex instructions, potentially leading to a **higher CPI**.\n*   **RISC (B: ARM):** Uses simpler instructions, potentially requiring **more instructions** but designed for easier pipelining and potentially **lower CPI** and higher clock speeds.\n\nComputer B wins here due to better CPI *and* higher frequency outweighing its higher instruction count."
+    },
+    {
+        "id": 51,
+        "question": "Why is energy a critical metric for mobile systems?",
+        "answer": "Energy consumption is critical because mobile devices rely on **limited battery capacity**. Lower energy use per task translates directly to **longer battery life**, a major factor in user experience and device usability. Energy efficiency is often a primary design goal."
+    },
+    {
+        "id": 52,
+        "question": "How is energy defined and measured in the context of processor performance?",
+        "answer": "**Energy** is the **total amount of work done** or **resources consumed** to complete a task. It is measured in **Joules (J)**. It's a cumulative quantity; higher energy use depletes the battery faster."
+    },
+    {
+        "id": 53,
+        "question": "How is power defined and measured in the context of processor performance?",
+        "answer": "**Power** is the **rate at which energy is consumed**. It is measured in **Watts (W)**, where **1 Watt = 1 Joule per second (J/s)**. Power indicates how intensely the processor is using energy *at a given moment*."
+    },
+    {
+        "id": 54,
+        "question": "What is the fundamental relationship between energy, power, and execution time?",
+        "answer": "The relationship is:\n\n`Energy (Joules) = Power (Watts) * Execution Time (seconds)`\n\nTotal energy depends on both how fast energy is used (Power) and for how long (Time)."
+    },
+    {
+        "id": 55,
+        "question": "Why is comparing total energy usually more meaningful than comparing instantaneous power for mobile battery life?",
+        "answer": "Battery life depends on **total energy consumed**, not just the peak power. A processor might have high peak power but finish a task very quickly, resulting in lower total energy use than a lower-power processor that takes much longer.\n\nExample: A (5W, 2s) = 10J vs. B (3W, 4s) = 12J. Processor A uses less energy despite higher power."
+    },
+    {
+        "id": 56,
+        "question": "How can higher performance (which might increase power) sometimes lead to lower energy consumption?",
+        "answer": "If increasing performance (e.g., via higher clock speed) significantly **reduces execution time**, the total energy (`Power * Time`) might decrease, even if power increases. The processor finishes faster and can return to a low-power idle state sooner.\n\nExample: Low-Perf (2W, 5s) = 10J. High-Perf (4W, 2s) = 8J. High performance saves energy here."
+    },
+    {
+        "id": 57,
+        "question": "What is the idealized relationship between power and execution time when performance scales, and how does it affect energy?",
+        "answer": "Ideally, if performance scales linearly, doubling the **power** might halve the **execution time**. In this perfect scenario, the total **energy** (`Power * Time`) would remain constant. In reality, inefficiencies often mean energy increases slightly with higher power/performance modes."
+    },
+    {
+        "id": 58,
+        "question": "Calculate the energy consumption for Computer A (Power=5W, Time=857.36 µs) and Computer B (Power=4W, Time=744.69 µs).",
+        "answer": "*   Energy_A = Power_A * Time_A = 5 W * (857.36 * 10^-6 s) = 0.0042868 J ≈ **4.29 mJ**\n*   Energy_B = Power_B * Time_B = 4 W * (744.69 * 10^-6 s) = 0.00297876 J ≈ **2.98 mJ**\n\nComputer B consumes significantly less energy."
+    },
+    {
+        "id": 59,
+        "question": "Based on the example, why is Computer B more energy-efficient than Computer A?",
+        "answer": "Computer B is more energy-efficient (uses **2.98 mJ** vs. A's **4.29 mJ**) because it has both:\n\n1.  **Lower Power Consumption** (4W vs. 5W)\n2.  **Shorter Execution Time** (744.69 µs vs. 857.36 µs)\n\nSince Energy = Power * Time, improvements in both factors lead to substantial energy savings."
+    },
+    {
+        "id": 60,
+        "question": "How should energy and power metrics guide processor selection for battery-powered devices?",
+        "answer": "For mobile devices, prioritize **lower total energy consumption** for a given task set. While lower power is generally good, the primary goal is minimizing `Energy = Power * Time`. Evaluate processors based on the **energy** required to complete representative workloads, as this directly impacts battery life."
+    },
+    {
+        "id": 61,
+        "question": "Which common processor evaluation metrics typically use SI prefixes based on powers of 10?",
+        "answer": "Metrics typically using **powers of 10** (SI prefixes like kilo, mega, giga, milli, micro, nano):\n\n*   **Time** (seconds: ms, µs, ns)\n*   **Frequency** (Hertz: kHz, MHz, GHz)\n*   **Power** (Watts: mW, W, kW)\n*   **Energy** (Joules: mJ, J, kJ)"
+    },
+    {
+        "id": 62,
+        "question": "Which common processor-related metrics typically use binary prefixes based on powers of 2?",
+        "answer": "Metrics typically using **powers of 2** (Binary prefixes like kibi, mebi, gibi, tebi):\n\n*   **Memory/Storage Capacity** (Bytes: KiB, MiB, GiB, TiB)\n*   **Data Transfer Rates** (Bytes/second: KiB/s, MiB/s, GiB/s)\n\nThis reflects the binary nature of computer memory addressing."
+    },
+    {
+        "id": 63,
+        "question": "Convert 3.2 GHz (Gigahertz) to Hertz.",
+        "answer": "The prefix **Giga (G)** means **10^9**.\n\n3.2 GHz = 3.2 * 10^9 Hz = **3,200,000,000 Hz**."
+    },
+    {
+        "id": 64,
+        "question": "Convert 1 GiB (Gibibyte) to bytes.",
+        "answer": "The prefix **Gibi (Gi)** means **2^30**.\n\n1 GiB = 1 * 2^30 Bytes = **1,073,741,824 Bytes**."
+    },
+    {
+        "id": 65,
+        "question": "Why can using GB (Gigabyte) vs. GiB (Gibibyte) cause confusion for storage capacities?",
+        "answer": "Confusion arises because:\n\n*   **Manufacturers often use GB (10^9 Bytes)** for marketing (e.g., 1 TB = 1 trillion bytes).\n*   **Operating systems often use GiB (2^30 Bytes)** or TiB (2^40 Bytes) to report capacity, based on binary addressing.\n\nThis leads to discrepancies: a 1 TB (10^12 B) drive appears as ~931 GiB (10^12 / 2^30) in the OS, seeming like 'lost' space."
+    },
+    {
+        "id": 66,
+        "question": "What is a benchmark in the context of processor evaluation?",
+        "answer": "A **benchmark** is a standardized program or set of programs used to:\n\n*   **Measure and compare** the performance of different computer systems (hardware or software).\n*   Provide a **repeatable and consistent** workload for evaluation.\n*   Represent (ideally) a **relevant real-world task** or set of tasks."
+    },
+    {
+        "id": 67,
+        "question": "What are some examples of real-world applications or utilities sometimes used as benchmarks?",
+        "answer": "Examples include:\n\n*   Web browsers (e.g., running specific web tasks)\n*   File compression tools (e.g., 7-Zip, WinRAR)\n*   Databases (e.g., running standard queries)\n*   Multimedia encoders/decoders (e.g., video rendering, audio processing)\n*   Compilers (e.g., compiling large codebases)"
+    },
+    {
+        "id": 68,
+        "question": "What is a 'phase' in the context of benchmark execution?",
+        "answer": "A **phase** is a distinct period during a benchmark's execution where the program exhibits **relatively consistent behavior** (e.g., specific patterns of instruction types, memory access rates).\n\nAnalyzing phases helps understand how a processor performs on different types of computation within a larger application."
+    },
+    {
+        "id": 69,
+        "question": "How are benchmarks used to compare processors?",
+        "answer": "By running the **same benchmark program(s)** under **controlled conditions** on different processors (A and B), performance metrics (like **execution time**, **throughput**, or **energy**) can be measured and compared directly. This provides a seemingly objective way to determine which processor performs 'better' for that specific benchmark."
+    },
+    {
+        "id": 70,
+        "question": "What is a potential drawback of hardware designers optimizing processors specifically for popular benchmarks?",
+        "answer": "**Over-optimization** for benchmarks (sometimes called 'benchmarketing'). A processor might be tuned to excel on specific benchmark tests, but these optimizations might **not translate to good performance** on a wider range of real-world applications that differ from the benchmark's behavior."
+    },
+    {
+        "id": 71,
+        "question": "How can analyzing benchmark phases help in processor optimization?",
+        "answer": "Identifying performance within specific **phases** helps designers understand **bottlenecks** related to certain behaviors (e.g., high cache miss rate during a data-intensive phase, branch mispredictions during a control-heavy phase). This allows targeted hardware optimizations (e.g., larger caches, better branch predictors) for common computational patterns."
+    },
+    {
+        "id": 72,
+        "question": "What is the 'critical path' in a simple processor design, and how does it limit performance?",
+        "answer": "The **critical path** is the **longest delay path** through the processor's combinational logic between clocked elements (registers). In a single-cycle processor, it dictates the **minimum clock period** because the entire instruction must complete within one cycle. A long critical path forces a slow clock frequency, limiting performance."
+    },
+    {
+        "id": 73,
+        "question": "How does the single-cycle processor design inherently limit clock frequency?",
+        "answer": "In a single-cycle design, the **clock period** must be long enough to accommodate the **slowest possible instruction** execution path (the critical path). Even fast instructions are forced to take this full, long clock cycle, resulting in a **low overall clock frequency** and inefficient use of time for faster operations."
+    },
+    {
+        "id": 74,
+        "question": "Why is main memory (DRAM) speed often a performance bottleneck for processors?",
+        "answer": "**Main memory (DRAM) latency** (time to access data) is significantly **slower** (e.g., 50-100 ns) than processor clock cycles (e.g., <1 ns). When the processor needs data not in cache, it must **stall** (wait) for many cycles for DRAM access, creating a major performance bottleneck."
+    },
+    {
+        "id": 75,
+        "question": "What fundamental constraint must processor architects adhere to when designing hardware?",
+        "answer": "Architects must strictly adhere to the **Instruction Set Architecture (ISA)**. The hardware implementation must ensure that every instruction behaves exactly as defined by the ISA specification (e.g., an `ADD` instruction must correctly perform addition according to the ISA rules)."
+    },
+    {
+        "id": 76,
+        "question": "How can processor architects improve performance while still satisfying the ISA constraint?",
+        "answer": "While the *behavior* defined by the ISA is fixed, architects can improve performance by changing the *internal implementation* (microarchitecture):\n\n*   Using faster circuits.\n*   Implementing **pipelining** to overlap instruction execution.\n*   Adding **caches** to reduce memory latency.\n*   Using **branch prediction**, **superscalar execution**, etc."
+    },
+    {
+        "id": 77,
+        "question": "What is the general focus of computer architecture research regarding performance improvement?",
+        "answer": "The focus is often on **Amdahl's Law**: *Make the common case fast*. Research involves:\n\n*   Identifying **frequent patterns** or bottlenecks in typical programs (using benchmarks).\n*   Designing hardware or microarchitectural techniques to **accelerate those common patterns** (e.g., caching for memory access, branch prediction for control flow)."
+    },
+    {
+        "id": 78,
+        "question": "How does software optimization (e.g., algorithm choice) parallel hardware optimization in improving performance?",
+        "answer": "Both aim to reduce execution time, but attack different parts of the formula (`Time = Instructions * CPI * Clock Period`):\n\n*   **Software Optimization (Algorithms):** Primarily reduces the **Number of Instructions** needed.\n*   **Hardware Optimization (Microarchitecture):** Primarily reduces **CPI** and/or **Clock Period**."
+    },
+    {
+        "id": 79,
+        "question": "How does pipelining specifically address the critical path bottleneck of a single-cycle processor?",
+        "answer": "**Pipelining** breaks the long critical path of a single-cycle design into **multiple shorter stages**. The clock period only needs to be long enough for the **slowest stage**, not the entire instruction. This allows for a significantly **higher clock frequency**."
+    },
+    {
+        "id": 80,
+        "question": "What is the primary mechanism by which pipelining improves processor performance?",
+        "answer": "Pipelining primarily improves performance by allowing a **higher clock frequency**. By dividing instruction execution into stages, the clock period can be reduced to match the delay of the longest stage, rather than the entire instruction latency. This increases **throughput** (instructions completed per unit time)."
+    },
+    {
+        "id": 81,
+        "question": "How does adding a cache hierarchy mitigate the main memory speed bottleneck?",
+        "answer": "**Caches** are small, fast memory buffers close to the processor.\n\n*   They store **frequently used data**.\n*   Accessing data in the cache (**cache hit**) is much faster (e.g., 1-few ns) than accessing main memory (e.g., 50-100 ns).\n*   This significantly reduces the average memory access time, minimizing processor stalls."
+    },
+    {
+        "id": 82,
+        "question": "How can benchmarks be used to identify common execution patterns suitable for hardware optimization?",
+        "answer": "By profiling benchmark execution, designers can identify:\n\n*   **Instruction Mix:** Which types of instructions are most frequent?\n*   **Memory Access Patterns:** High cache miss rates? Specific stride patterns?\n*   **Control Flow:** High frequency of branches? Predictable or unpredictable?\n\nThis data guides the design of targeted optimizations (e.g., specific functional units, cache configurations, branch predictors)."
+    },
+    {
+        "id": 83,
+        "question": "Using sorting algorithms as an example, explain how software optimization improves performance.",
+        "answer": "Choosing a better algorithm drastically reduces the **number of instructions** executed.\n\n*   **Bubble Sort (O(n^2)):** Requires many comparisons/swaps (many instructions).\n*   **Quicksort (O(n log n)):** Requires far fewer operations for large n.\n\nFewer instructions directly lead to shorter execution time on the *same* hardware (`Time = Instructions * CPI * Clock Period`)."
+    },
+    {
+        "id": 84,
+        "question": "Explain how the critical path length directly impacts execution time in a single-cycle processor.",
+        "answer": "In a single-cycle design: `Clock Period >= Critical Path Delay`. Since `Execution Time = Instructions * CPI * Clock Period`, and CPI=1:\n`Execution Time = Instructions * Clock Period`.\n\nA longer critical path forces a longer Clock Period, directly increasing the total Execution Time for the same number of instructions."
+    },
+    {
+        "id": 85,
+        "question": "How does the fixed CPI=1 of a single-cycle processor relate to its performance limitations?",
+        "answer": "While CPI=1 seems efficient (no wasted cycles per instruction *internally*), the performance is limited by the **long clock period** required to accommodate the slowest possible instruction path (critical path). This slow clock makes the *overall* execution time poor compared to pipelined designs with higher frequencies, even if their CPI > 1."
+    },
+    {
+        "id": 86,
+        "question": "Explain the impact of main memory latency on execution time using cycles.",
+        "answer": "If memory latency is 100 ns and clock frequency is 2 GHz (0.5 ns period):\n\n*   Wait time per access = 100 ns / 0.5 ns/cycle = **200 cycles**.\n\nEach memory access requiring DRAM fetch forces the processor to stall for 200 cycles. Frequent misses drastically increase the effective CPI and total execution time. **Caching** reduces this stall time for hits."
+    },
+    {
+        "id": 87,
+        "question": "How can benchmark analysis justify adding a hardware branch predictor?",
+        "answer": "If benchmarks show a high frequency of **branch instructions** (e.g., 20% of all instructions) and significant **stalls** occur when branches are taken or mispredicted in a pipelined design, adding a **branch predictor** is justified. Reducing branch penalties (e.g., from 5 cycles to 1 cycle on average) can significantly lower the overall CPI and execution time."
+    },
+    {
+        "id": 88,
+        "question": "How does software optimization directly affect the 'Number of Instructions' term in the execution time formula?",
+        "answer": "Effective software optimization (better algorithms, compiler optimizations like loop unrolling or function inlining) directly **reduces the total number of dynamic instructions** that need to be executed for a given task. This reduction proportionally decreases the calculated `Execution Time = Instructions * CPI * Clock Period`."
+    },
+    {
+        "id": 89,
+        "question": "Does pipelining primarily aim to improve CPI or Clock Period?",
+        "answer": "Pipelining primarily aims to improve (shorten) the **Clock Period** by allowing a higher **Clock Frequency**. While it aims for an *ideal* CPI of 1 (one instruction completing each cycle), pipeline hazards (stalls) often increase the *actual* average CPI to slightly above 1. The main benefit comes from the faster clock."
+    },
+    {
+        "id": 90,
+        "question": "How might adding a cache affect energy consumption (considering both time and power)?",
+        "answer": "Adding a cache has competing effects:\n\n*   **Reduces Execution Time:** By reducing memory stalls, potentially lowering `Energy = Power * Time`.\n*   **Increases Power:** The cache circuitry itself consumes static and dynamic power.\n\nThe net effect depends on the workload: If cache hits significantly reduce time, the energy savings from shorter time often outweigh the increased power consumption, leading to **lower overall energy**. Otherwise, energy might increase."
+    },
+    {
+        "id": 91,
+        "question": "Why is reducing memory access time via caching particularly beneficial for mobile processor energy efficiency?",
+        "answer": "Memory accesses (especially to DRAM) are energy-intensive and slow. Caching reduces the *number* of slow, high-energy DRAM accesses by serving data from the faster, lower-energy cache. This **reduces execution time** and avoids costly DRAM power cycles, significantly lowering the **total energy** consumed, which is critical for battery life."
+    },
+    {
+        "id": 92,
+        "question": "What is an example of a hardware optimization targeting a specific pattern found via benchmarking?",
+        "answer": "If benchmarks reveal frequent **vector operations** (e.g., in multimedia or scientific code), designers might add **SIMD (Single Instruction, Multiple Data) execution units**. These units perform the same operation on multiple data elements simultaneously, drastically reducing the instruction count and execution time for those specific patterns."
+    },
+    {
+        "id": 93,
+        "question": "Explain how branch prediction 'makes the common case fast' for control flow.",
+        "answer": "Branches are very common. In pipelines, calculating the target address and condition takes time, causing stalls. **Branch prediction** guesses the outcome (**taken/not-taken**) and target address *in advance*. If correct (the common case with good predictors), the pipeline continues without stalling. It speeds up the frequent branch operations, improving overall performance."
+    },
+    {
+        "id": 94,
+        "question": "Quantify the execution time improvement if Computer A (Time=857µs) was perfectly pipelined to achieve 5x the frequency (12.5 GHz) with the same CPI (1.5).",
+        "answer": "*   Original Freq = 2.5 GHz -> Period = 0.4 ns\n*   New Freq = 12.5 GHz -> Period = 1 / 12.5e9 = 0.08 ns\n*   Instructions = 1,428,927\n*   CPI = 1.5\n\n`New Time = 1,428,927 * 1.5 * 0.08 ns = 171,471 ns ≈ **171.5 µs**`\n\nThis is a 5x reduction from the original 857 µs, matching the frequency increase (assuming ideal CPI)."
+    },
+    {
+        "id": 95,
+        "question": "If a program has 1000 memory accesses, and a cache reduces average access time from 80ns (no cache) to 5ns (with cache), what is the time speed-up for the memory access portion?",
+        "answer": "*   Time (no cache) = 1000 accesses * 80 ns/access = 80,000 ns\n*   Time (with cache) = 1000 accesses * 5 ns/access = 5,000 ns\n\nLower time is better. Formula: `Speed-up = Time_NoCache / Time_WithCache`\nSpeed-up = 80,000 ns / 5,000 ns = **16**. The memory access portion is **16 times faster** with the cache."
+    },
+    {
+        "id": 96,
+        "question": "If Quicksort reduces instructions by 90% compared to Bubble Sort for a task, what is the expected execution time speed-up (assuming CPI and Clock Period are constant)?",
+        "answer": "`Time = Instructions * CPI * Clock Period`\nIf CPI and Clock Period are constant, Time is directly proportional to Instructions.\n\n*   Instructions_Bubble = I\n*   Instructions_Quick = 0.1 * I (90% reduction)\n\nSpeed-up = Time_Bubble / Time_Quick = Instructions_Bubble / Instructions_Quick = I / (0.1 * I) = **10**.\nThe expected speed-up is **10 times**."
+    },
+    {
+        "id": 97,
+        "question": "How does the critical path fundamentally limit the maximum clock frequency of a single-cycle design?",
+        "answer": "The clock signal synchronizes operations. The time between clock ticks (**clock period**) must be long enough for the signal changes from one clock tick to propagate through the **longest logical path (critical path)** and stabilize before the *next* clock tick arrives. Therefore, `Min Clock Period = Critical Path Delay`, which means `Max Clock Frequency = 1 / Critical Path Delay`."
+    },
+    {
+        "id": 98,
+        "question": "Can a processor architect change how an 'ADD' instruction works (e.g., make it subtract) to improve performance?",
+        "answer": "**No.** Changing the fundamental behavior of an instruction violates the **ISA (Instruction Set Architecture)** constraint. The architect *must* ensure the 'ADD' instruction performs addition as defined. Performance improvements come from *how* the addition is implemented internally (faster circuits, pipelining), not by changing *what* it does."
+    },
+    {
+        "id": 99,
+        "question": "Summarize how pipelining and caching improve performance, referencing the execution time formula.",
+        "answer": "`Time = Instructions * CPI * Clock Period`\n\n*   **Pipelining:** Primarily reduces **Clock Period** (increases Frequency) by breaking down the critical path. May slightly increase **CPI** due to hazards.\n*   **Caching:** Primarily reduces the effective **CPI** by minimizing stalls (cycles wasted) waiting for slow memory accesses. It reduces the *average* cycles per instruction."
+    },
+    {
+        "id": 100,
+        "question": "How would a designer combine benchmarking, pipelining, and caching to optimize a mobile processor?",
+        "answer": "1.  **Benchmark:** Run representative mobile workloads (browsing, video, apps) to identify bottlenecks (e.g., high memory stalls, specific instruction patterns).\n2.  **Cache:** Implement/tune cache hierarchy (L1/L2 sizes, associativity) to reduce average memory access time, lowering effective **CPI** and **Energy**.\n3.  **Pipeline:** Design an efficient pipeline (appropriate number of stages) to increase **Clock Frequency** (reducing Clock Period), further cutting **Execution Time** and potentially **Energy** (if time reduction outweighs power increase).\nGoal: Minimize **Energy = Power * Time** for target workloads."
+    }
+]
