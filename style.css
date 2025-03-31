@@ -1,3 +1,24 @@
+/* Add these styles to your existing style.css */
+
+/* Container for the reset button */
+.reset-controls {
+    text-align: center; /* Center the button */
+    margin-bottom: var(--spacing); /* Add space below */
+    margin-top: calc(var(--spacing) * 1.5); /* Add space above */
+}
+
+/* Style for the reset/danger button */
+.button-danger {
+    background-color: var(--danger-color); /* Use existing danger color */
+    color: var(--white);
+}
+
+/* Optional: Darker hover effect for danger button */
+.button-danger:hover {
+    background-color: #d32f2f; /* A slightly darker red */
+    opacity: 1; /* Override general button hover opacity if needed */
+}
+
 /* Add to style.css if desired */
 .set-selector-container {
     margin-bottom: 20px;

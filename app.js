@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Configuration ---
-    // Map set IDs to their data files and cache keys
     const SET_CONFIG = {
         'ca4': {
             dataUrl: 'flashcards_ca4.json',
             cacheKey: 'flashcardProgress_ca4_v1',
-            name: 'CA4 (MIPS)' // For potential future use
+            name: 'CA4 (MIPS)'
         },
         'ca5': {
             dataUrl: 'flashcards_ca5.json',
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: 'CA5 (Performance)'
         }
     };
-    const DEFAULT_SET_ID = 'ca4'; // Set the default set to load
+    const DEFAULT_SET_ID = 'ca4';
     const DEFAULT_WEIGHT = 1.0;
     const WEIGHTS = {
         understand: 0.5,
@@ -24,13 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- State ---
     let flashcards = [];
     let currentCardIndex = 0;
-    let currentSetId = DEFAULT_SET_ID; // Track the current set
+    let currentSetId = DEFAULT_SET_ID;
     let answerRevealed = false;
 
     // --- DOM Elements Cache ---
     const loadingIndicator = document.getElementById('loadingIndicator');
     const appContent = document.getElementById('appContent');
-    const setSelector = document.getElementById('setSelector'); // Get the new selector
+    const setSelector = document.getElementById('setSelector');
     const cardSelector = document.getElementById('cardSelector');
     const randomCardBtn = document.getElementById('randomCardBtn');
     const cardNumberEl = document.getElementById('cardNumber');
@@ -42,12 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const littleBitBtn = document.getElementById('littleBitBtn');
     const noIdeaBtn = document.getElementById('noIdeaBtn');
     const statsDisplayEl = document.getElementById('statsDisplay');
+    const resetProgressBtn = document.getElementById('resetProgressBtn'); // <-- Add reset button
 
     // --- Initialization ---
     async function init() {
-        // Setup the main event listeners once
         setupEventListeners();
-        // Load the initial default set
         await loadSet(DEFAULT_SET_ID);
     }
 
@@ -55,10 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadSet(setId) {
         console.log(`Loading set: ${setId}`);
         showLoading(true);
-        appContent.style.display = 'none'; // Hide content during load
-        currentSetId = setId; // Update current set ID
+        appContent.style.display = 'none';
+        currentSetId = setId;
 
-        // Get config for the selected set
         const config = SET_CONFIG[setId];
         if (!config) {
             showError(`Configuration for set "${setId}" not found.`);
@@ -68,34 +65,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const rawData = await fetchData(config.dataUrl);
-            const savedProgress = loadProgress(config.cacheKey); // Use set-specific cache key
+            const savedProgress = loadProgress(config.cacheKey);
             flashcards = processData(rawData, savedProgress);
 
             if (flashcards.length === 0) {
                 showError(`No flashcards loaded for ${config.name}. Check the data file.`);
                  showLoading(false);
+                 // Ensure UI reflects empty state even on load error after processing
+                 populateCardSelector();
+                 updateStats();
                 return;
             }
 
-            // Reset UI for the new set
             populateCardSelector();
-            displayCard(0); // Display first card of the new set
+            displayCard(0);
             updateStats();
             showLoading(false);
-            appContent.style.display = 'block'; // Show content again
+            appContent.style.display = 'block';
 
         } catch (error) {
             console.error(`Failed to load set ${setId}:`, error);
             showError(`Error loading ${config.name}: ${error.message}`);
             showLoading(false);
-            flashcards = []; // Clear flashcards on error
-            populateCardSelector(); // Clear dropdown
-            updateStats(); // Update stats to show error/empty state
+            flashcards = [];
+            populateCardSelector();
+            updateStats();
         }
     }
 
-
     // --- Data Handling ---
+    // fetchData and processData remain the same as before
     async function fetchData(url) {
         const response = await fetch(url);
         if (!response.ok) {
@@ -114,11 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
             throw new Error("Invalid data format received.");
         }
         return rawData.map(card => {
-             // Ensure card has an id
              if (card.id === undefined || card.id === null) {
                  console.warn("Card missing ID:", card);
-                 // Skip card or assign temporary ID? Skipping is safer.
-                 return null; // Will be filtered out later
+                 return null;
              }
             const progress = savedProgress[card.id] || {};
             return {
@@ -126,11 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 weight: progress.weight !== undefined ? progress.weight : DEFAULT_WEIGHT,
                 category: progress.category || null,
             };
-        }).filter(card => card !== null); // Remove any cards skipped due to missing ID
+        }).filter(card => card !== null);
     }
 
+
     // --- Caching (localStorage) ---
-    // Now accepts cacheKey argument
+    // loadProgress and saveProgress remain the same as before
     function loadProgress(cacheKey) {
         try {
             const saved = localStorage.getItem(cacheKey);
@@ -141,19 +139,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Now uses the current set's cacheKey
     function saveProgress() {
         const cacheKey = SET_CONFIG[currentSetId]?.cacheKey;
         if (!cacheKey) {
             console.error("Cannot save progress: Unknown cache key for current set.");
             return;
         }
-
         try {
             const progressToSave = {};
             flashcards.forEach(card => {
-                if (card.weight !== DEFAULT_WEIGHT || card.category !== null) {
-                    // Ensure card.id exists before saving
+                if (card && (card.weight !== DEFAULT_WEIGHT || card.category !== null)) {
                     if (card.id !== undefined && card.id !== null) {
                         progressToSave[card.id] = {
                             weight: card.weight,
@@ -164,13 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
-
             if (Object.keys(progressToSave).length > 0) {
                  localStorage.setItem(cacheKey, JSON.stringify(progressToSave));
-                 // console.log(`Progress saved for ${currentSetId} under key ${cacheKey}`);
             } else {
-                 localStorage.removeItem(cacheKey); // Clean up if no progress for this set
-                 // console.log(`Progress cache cleared for ${currentSetId}`);
+                 localStorage.removeItem(cacheKey);
             }
         } catch (error) {
             console.error(`Error saving progress to localStorage (key: ${cacheKey}):`, error);
@@ -179,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- UI Updates ---
-    function showLoading(isLoading) {
+    // showLoading, showError, populateCardSelector, displayCard, updateStats remain the same as before
+      function showLoading(isLoading) {
         loadingIndicator.textContent = 'Loading cards...'; // Reset message
         loadingIndicator.style.color = ''; // Reset color
         loadingIndicator.style.display = isLoading ? 'block' : 'none';
@@ -198,16 +191,20 @@ document.addEventListener('DOMContentLoaded', () => {
         cardSelector.innerHTML = ''; // Clear existing options
         if (flashcards.length > 0) {
             flashcards.forEach((card, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.textContent = `Card ${card.id}`; // Use card.id for display
-                cardSelector.appendChild(option);
+                 // Ensure card object is valid before creating option
+                 if (card && card.id !== undefined) {
+                     const option = document.createElement('option');
+                     option.value = index;
+                     option.textContent = `Card ${card.id}`;
+                     cardSelector.appendChild(option);
+                 } else {
+                     console.warn("Skipping invalid card during selector population:", card);
+                 }
             });
             cardSelector.disabled = false;
             randomCardBtn.disabled = false;
 
         } else {
-             // Handle empty set case
              const option = document.createElement('option');
              option.textContent = "No cards available";
              option.disabled = true;
@@ -215,52 +212,49 @@ document.addEventListener('DOMContentLoaded', () => {
              cardSelector.disabled = true;
              randomCardBtn.disabled = true;
         }
-
     }
 
     function displayCard(index) {
-         // Check if flashcards array is populated and index is valid
          if (!flashcards || flashcards.length === 0) {
              questionTextEl.textContent = "No cards loaded for this set.";
              answerTextEl.textContent = "";
              cardNumberEl.textContent = "Card 0 of 0";
-              // Hide controls that don't make sense without cards
              revealBtn.style.display = 'none';
              feedbackControlsEl.style.display = 'none';
-             return; // Exit early
+             if(resetProgressBtn) resetProgressBtn.disabled = true; // Disable reset if no cards
+             return;
          }
+          if(resetProgressBtn) resetProgressBtn.disabled = false; // Enable reset if cards exist
+
 
         if (index < 0 || index >= flashcards.length) {
             console.warn(`Invalid card index requested: ${index}. Resetting to 0.`);
-            index = 0; // Reset to first card if index is invalid
-             if (flashcards.length === 0) return; // Still check after reset attempt
+            index = 0;
+             if (flashcards.length === 0) return;
         }
 
         currentCardIndex = index;
         const card = flashcards[currentCardIndex];
 
-         // Check if the card object is valid
          if (!card) {
              console.error(`Card at index ${index} is undefined.`);
              questionTextEl.textContent = "Error displaying card.";
              answerTextEl.textContent = "";
-             return; // Exit if card is somehow invalid
+             return;
          }
 
 
         cardNumberEl.textContent = `Card ${card.id} of ${flashcards.length}`;
-        questionTextEl.textContent = card.question || "[No Question]"; // Fallback text
-        answerTextEl.textContent = card.answer || "[No Answer]"; // Fallback text
+        questionTextEl.textContent = card.question || "[No Question]";
+        answerTextEl.textContent = card.answer || "[No Answer]";
 
-        // Reset view
         answerTextEl.classList.remove('visible');
         answerTextEl.style.display = 'none';
-        revealBtn.style.display = 'block'; // Show reveal button again
+        revealBtn.style.display = 'block';
         feedbackControlsEl.classList.remove('visible');
         feedbackControlsEl.style.display = 'none';
         answerRevealed = false;
 
-        // Update dropdown selector to match current card
         cardSelector.value = index;
     }
 
@@ -287,35 +281,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Event Handling ---
     function setupEventListeners() {
-        // Listener for set selection
         setSelector.addEventListener('change', (event) => {
              const selectedSetId = event.target.value;
-             loadSet(selectedSetId); // Load the newly selected set
+             loadSet(selectedSetId);
         });
 
-        // Other listeners
         randomCardBtn.addEventListener('click', selectWeightedRandomCard);
         revealBtn.addEventListener('click', handleReveal);
         understandBtn.addEventListener('click', () => handleFeedback('understand'));
         littleBitBtn.addEventListener('click', () => handleFeedback('little-bit'));
         noIdeaBtn.addEventListener('click', () => handleFeedback('no-idea'));
         cardSelector.addEventListener('change', handleGoToCard);
+        resetProgressBtn.addEventListener('click', handleResetProgress); // <-- Add listener for reset
     }
 
-    // Function remains the same, uses current flashcards array length
-    function handleGoToCard() {
+    // handleGoToCard, handleReveal, handleFeedback remain the same as before
+     function handleGoToCard() {
         const selectedIndex = parseInt(cardSelector.value, 10);
         if (!isNaN(selectedIndex) && selectedIndex >= 0 && selectedIndex < flashcards.length) {
             displayCard(selectedIndex);
         } else if (!isNaN(selectedIndex)) {
              console.warn(`Attempted to navigate to invalid index: ${selectedIndex}`);
-             cardSelector.value = currentCardIndex; // Reset selector to current card
+             cardSelector.value = currentCardIndex;
         }
     }
 
 
      function handleReveal() {
-         if (!flashcards || flashcards.length === 0) return; // Don't reveal if no cards
+         if (!flashcards || flashcards.length === 0) return;
 
         answerTextEl.style.display = 'block';
         setTimeout(() => {
@@ -334,14 +327,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleFeedback(category) {
         if (!answerRevealed || !flashcards || flashcards.length === 0) return;
 
-        // Ensure currentCardIndex is valid
         if (currentCardIndex < 0 || currentCardIndex >= flashcards.length) {
              console.error("Invalid currentCardIndex during feedback:", currentCardIndex);
              return;
         }
-
         const card = flashcards[currentCardIndex];
-         // Check if card exists
          if (!card) {
              console.error(`Card at index ${currentCardIndex} is undefined during feedback.`);
              return;
@@ -350,21 +340,67 @@ document.addEventListener('DOMContentLoaded', () => {
         card.category = category;
         card.weight = WEIGHTS[category] || DEFAULT_WEIGHT;
 
-        saveProgress(); // Save progress for the current set
+        saveProgress();
         updateStats();
 
          if (flashcards.length > 1) {
             selectWeightedRandomCard();
         } else if (flashcards.length === 1) {
-            // If only one card, just reset its view
             displayCard(currentCardIndex);
         }
-         // If flashcards.length is 0, do nothing more
     }
 
+    // --- Reset Progress Function --- <--- NEW FUNCTION
+    function handleResetProgress() {
+        if (!flashcards || flashcards.length === 0) {
+            alert("No progress to reset for an empty set.");
+            return;
+        }
+
+        // Confirm with the user
+        if (!confirm(`Are you sure you want to reset all progress for the "${SET_CONFIG[currentSetId]?.name || 'current'}" set? This cannot be undone.`)) {
+            return; // User cancelled
+        }
+
+        // Get the cache key for the current set
+        const cacheKey = SET_CONFIG[currentSetId]?.cacheKey;
+        if (!cacheKey) {
+            console.error("Cannot reset progress: Unknown cache key for current set.");
+            alert("Error: Could not determine which progress set to reset.");
+            return;
+        }
+
+        // Remove the specific set's progress from localStorage
+        try {
+            localStorage.removeItem(cacheKey);
+            console.log(`Progress cache cleared for ${currentSetId} (key: ${cacheKey})`);
+        } catch (error) {
+             console.error(`Error removing item from localStorage (key: ${cacheKey}):`, error);
+             alert("An error occurred while trying to clear saved progress.");
+             // Continue to reset in-memory data anyway
+        }
+
+
+        // Reset the weight and category for all cards currently in memory
+        flashcards.forEach(card => {
+            if (card) { // Ensure card exists
+                card.weight = DEFAULT_WEIGHT;
+                card.category = null;
+            }
+        });
+
+        // Update the UI
+        updateStats();
+        // Redisplay the current card to clear feedback buttons etc.
+        displayCard(currentCardIndex);
+
+        alert(`Progress for the "${SET_CONFIG[currentSetId]?.name || 'current'}" set has been reset.`);
+    }
+
+
     // --- Card Selection Logic ---
-    // Function remains mostly the same, operates on the current flashcards array
-    function selectWeightedRandomCard() {
+    // selectWeightedRandomCard remains the same as before
+     function selectWeightedRandomCard() {
         if (!flashcards || flashcards.length === 0) {
              console.log("No cards available for random selection.");
              displayCard(-1); // Show empty state
@@ -376,8 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         flashcards.forEach(card => {
-            if (!card) return; // Skip undefined cards
-             // Ensure weight is valid, assign default if not
+            if (!card) return;
             if (typeof card.weight !== 'number' || card.weight <= 0 || isNaN(card.weight)) {
                  card.weight = DEFAULT_WEIGHT;
             }
@@ -387,53 +422,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (availableCards.length === 0) {
              console.warn("No cards with positive weight available, selecting completely randomly.");
-             displayCard(Math.floor(Math.random() * flashcards.length)); // Pick any card
+             displayCard(Math.floor(Math.random() * flashcards.length));
              return;
         }
 
-         // --- Weighted selection logic using only availableCards ---
-         // Try to exclude the current card if possible
          let possibleIndices = availableCards.map((_, i) => i);
-         let currentCardInAvailableIndex = availableCards.findIndex((card, idx) => flashcards.indexOf(card) === currentCardIndex); // Find index within availableCards
+         let currentCardInAvailableIndex = availableCards.findIndex((card, idx) => flashcards.indexOf(card) === currentCardIndex);
 
          let adjustedTotalWeight = availableCards.reduce((sum, card) => sum + card.weight, 0);
          let randomValue = Math.random() * adjustedTotalWeight;
          let cumulativeWeight = 0;
          let nextAvailableIndex = -1;
 
-
-         // Simple weighted selection from available cards
          for (let i = 0; i < availableCards.length; i++) {
             cumulativeWeight += availableCards[i].weight;
             if (randomValue <= cumulativeWeight) {
-                 // Basic attempt to avoid immediate repeat
                 if (i === currentCardInAvailableIndex && availableCards.length > 1) {
-                    // If it picked the current card, try the next one in weighted list (simple heuristic)
                     continue;
                 }
                 nextAvailableIndex = i;
                 break;
             }
         }
-        // If loop finishes (e.g., only current card was valid, or picked last card), handle fallback
         if (nextAvailableIndex === -1) {
              if (availableCards.length > 0) {
-                // Pick a random card from the available ones as fallback
                 nextAvailableIndex = Math.floor(Math.random() * availableCards.length);
+                // Avoid picking current card if possible on random fallback
+                if(availableCards.length > 1 && nextAvailableIndex === currentCardInAvailableIndex) {
+                    nextAvailableIndex = (nextAvailableIndex + 1) % availableCards.length;
+                }
              } else {
-                 // Absolute fallback if availableCards is empty (shouldn't happen with checks above)
                   console.error("Fallback failed: No available cards.");
                   return;
              }
          }
 
-
-        // Get the original index from the main flashcards array
         const nextOriginalIndex = flashcards.indexOf(availableCards[nextAvailableIndex]);
 
         if (nextOriginalIndex === -1) {
              console.error("Failed to find original index for selected card.");
-             // Fallback: pick truly random from original list
              displayCard(Math.floor(Math.random() * flashcards.length));
         } else {
             displayCard(nextOriginalIndex);

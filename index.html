@@ -10,7 +10,6 @@
     <div class="app-container">
         <h1>Flash Card Study App</h1>
 
-        <!-- Add Set Selector Here -->
         <div class="set-selector-container controls">
              <label for="setSelector">Select Card Set:</label>
              <select id="setSelector">
@@ -18,8 +17,6 @@
                  <option value="ca5">Computer Architecture 5 (Performance)</option>
              </select>
         </div>
-        <!-- End Set Selector -->
-
 
         <div id="loadingIndicator" class="loading">Loading cards...</div>
 
@@ -48,6 +45,12 @@
                     <button class="button no-idea" id="noIdeaBtn">No Idea</button>
                 </div>
             </div>
+
+            <!-- Add Reset Button Container -->
+            <div class="reset-controls controls">
+                <button id="resetProgressBtn" class="button button-danger">Reset Current Set Progress</button>
+            </div>
+            <!-- End Reset Button Container -->
 
             <div class="stats" id="statsDisplay">Calculating stats...</div>
         </div>
