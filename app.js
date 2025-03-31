@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingIndicator = document.getElementById('loadingIndicator');
     const appContent = document.getElementById('appContent');
     const cardSelector = document.getElementById('cardSelector');
-    const goToCardBtn = document.getElementById('goToCardBtn');
+    // Go button element removed
     const randomCardBtn = document.getElementById('randomCardBtn');
     const cardNumberEl = document.getElementById('cardNumber');
     const questionTextEl = document.getElementById('questionText');
@@ -45,7 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             populateCardSelector();
             setupEventListeners();
-            displayCard(0); // Display first card initially
+            // Display first card initially, or last viewed if that state was saved (advanced)
+            // For simplicity, we always start at 0 but apply saved weights/categories
+            displayCard(0);
             updateStats();
             showLoading(false);
 
@@ -139,12 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         // Disable dropdown if only one card
         cardSelector.disabled = flashcards.length <= 1;
-        goToCardBtn.disabled = flashcards.length <= 1;
+        // Disabling logic for Go button removed
     }
 
     function displayCard(index) {
         if (index < 0 || index >= flashcards.length) {
             console.warn(`Invalid card index requested: ${index}`);
+            // Attempt to recover or show an error? For now, just return.
             return;
         }
         currentCardIndex = index;
@@ -189,22 +192,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Event Handling ---
     function setupEventListeners() {
-        goToCardBtn.addEventListener('click', handleGoToCard);
+        // Event listener for Go button removed
         randomCardBtn.addEventListener('click', selectWeightedRandomCard);
         revealBtn.addEventListener('click', handleReveal);
         understandBtn.addEventListener('click', () => handleFeedback('understand'));
         littleBitBtn.addEventListener('click', () => handleFeedback('little-bit'));
         noIdeaBtn.addEventListener('click', () => handleFeedback('no-idea'));
-         // Add listener for dropdown change as well
-        cardSelector.addEventListener('change', handleGoToCard);
+         // Keep listener for dropdown change
+        cardSelector.addEventListener('change', handleGoToCard); // Navigates on selection change
     }
 
+    // This function is now only triggered by the cardSelector 'change' event
     function handleGoToCard() {
         const selectedIndex = parseInt(cardSelector.value, 10);
-        if (!isNaN(selectedIndex)) {
+        // Check if selectedIndex is a valid number and within bounds
+        if (!isNaN(selectedIndex) && selectedIndex >= 0 && selectedIndex < flashcards.length) {
             displayCard(selectedIndex);
+        } else if (!isNaN(selectedIndex)) {
+             console.warn(`Attempted to navigate to invalid index: ${selectedIndex}`);
+             // Optionally reset selector to current card if navigation fails
+             cardSelector.value = currentCardIndex;
         }
     }
+
 
      function handleReveal() {
         answerTextEl.style.display = 'block'; // Make it block first
@@ -254,7 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (card.weight <= 0) card.weight = 0.01; // Assign a tiny minimum weight
         });
 
-        const totalWeight = flashcards.reduce((sum, card) => sum + card.weight, 0);
+        const totalWeight = flashcards.reduce((sum, card) => sum + (card.weight || DEFAULT_WEIGHT), 0); // Added check for undefined weight
+
 
         if (totalWeight <= 0) {
             // Fallback if all weights somehow became zero or negative
@@ -265,32 +276,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let randomValue = Math.random() * totalWeight;
         let cumulativeWeight = 0;
-        let nextIndex = -1;
+        let potentialNextIndex = -1;
+        let availableIndices = flashcards.map((_, i) => i); // All indices initially available
 
-        for (let i = 0; i < flashcards.length; i++) {
-            cumulativeWeight += flashcards[i].weight;
-            if (randomValue <= cumulativeWeight) {
-                 // Don't pick the same card twice in a row if possible
-                 if (i === currentCardIndex && flashcards.length > 1) {
-                     // Try to find the *next* card in the weighted list instead
-                     // This is a simple heuristic, not perfectly avoiding repeats
-                     continue;
+        // Try to avoid selecting the current card, especially if many cards exist
+        if (flashcards.length > 1) {
+            availableIndices = availableIndices.filter(i => i !== currentCardIndex);
+            // Recalculate totalWeight excluding the current card if we remove it
+            const adjustedTotalWeight = availableIndices.reduce((sum, i) => sum + (flashcards[i].weight || DEFAULT_WEIGHT), 0);
+
+            if (adjustedTotalWeight > 0) {
+                 randomValue = Math.random() * adjustedTotalWeight; // Reroll based on adjusted weight
+                 for (const i of availableIndices) {
+                    cumulativeWeight += (flashcards[i].weight || DEFAULT_WEIGHT);
+                    if (randomValue <= cumulativeWeight) {
+                        potentialNextIndex = i;
+                        break;
+                    }
                  }
-                nextIndex = i;
-                break;
+            } else {
+                // If removing the current card leaves no weight, pick it (or any random from original list)
+                 potentialNextIndex = currentCardIndex; // Or fallback to truly random below
             }
-        }
-         // If the loop finished because the only valid card was the current one,
-         // or if something went wrong, just pick the last card considered
-        if (nextIndex === -1) {
-             nextIndex = flashcards.length - 1; // Fallback
-             // Or could pick a truly random non-current card as another fallback
-             // let possibleIndices = flashcards.map((_, idx) => idx).filter(idx => idx !== currentCardIndex);
-             // nextIndex = possibleIndices[Math.floor(Math.random() * possibleIndices.length)];
+
+        } else {
+             // Only one card, pick it (handled at the start, but defensive)
+             potentialNextIndex = 0;
         }
 
 
-        displayCard(nextIndex);
+         // If the weighted selection among non-current cards failed, or only 1 card
+        if (potentialNextIndex === -1) {
+             // Fallback: Just pick any available card randomly if the weighted logic had issues
+             if (availableIndices.length > 0) {
+                 potentialNextIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+             } else {
+                 // Absolute fallback: pick the first card if all else fails
+                 potentialNextIndex = 0;
+             }
+        }
+
+        displayCard(potentialNextIndex);
     }
 
     // --- Start the App ---
